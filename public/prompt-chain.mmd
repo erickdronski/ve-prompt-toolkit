@@ -1,11 +1,11 @@
-flowchart TB
+flowchart LR
 
 %% ════════════════════════════════════════════
 %% On Demand Sales Knowledge Toolkit
-%% Full Prompt Content for Lucidchart Import
+%% Horizontal Layout: 3 Pillars Side-by-Side
 %% ════════════════════════════════════════════
 
-subgraph COL1["🌐 Customer Landscape — Public Data"]
+subgraph COL1["🌐 PILLAR 1: Customer Landscape — Public Data"]
   direction TB
 
   P1["🔵 1. MARKET RESEARCH
@@ -72,9 +72,11 @@ subgraph COL1["🌐 Customer Landscape — Public Data"]
   account snapshot.
 
   Pre-req: Salesforce account data"]
+
+  P1 --> P2 --> P3
 end
 
-subgraph COL2["🔒 Customer Ivanti Landscape — Internal Data"]
+subgraph COL2["🔒 PILLAR 2: Ivanti Landscape — Internal Data"]
   direction TB
 
   P4["🔷 4. TENANT & RENEWAL DATA
@@ -101,7 +103,7 @@ subgraph COL2["🔒 Customer Ivanti Landscape — Internal Data"]
   Pre-req: 360 + Salesforce data"]
 end
 
-subgraph COL3["⚡ Action Item Prompts"]
+subgraph COL3["⚡ PILLAR 3: Action Prompts"]
   direction TB
 
   P5["🟣 5. CROSS-SELL / UP-SELL
@@ -149,23 +151,21 @@ subgraph COL3["⚡ Action Item Prompts"]
   Cross-sell pipeline
   Renewal protection
   Executive buy-in"])
+
+  P5 --> P6 --> REVENUE
 end
 
 %% ════════════════════════════════════════════
-%% FLOW CONNECTIONS
+%% CROSS-PILLAR CONNECTIONS
 %% ════════════════════════════════════════════
 
-P1 -->|"feeds into"| P2
-P2 -->|"industry context"| P3
-P3 -->|"footprint"| P4
+P3 -->|"footprint data"| P4
 P4 -->|"account intel"| P5
-P5 -->|"opportunities"| P6
-P6 -->|"drives"| REVENUE
 
-%% Cross-feeds
 P1 -.->|"company context"| P5
 P2 -.->|"vertical challenges"| P5
 P3 -.->|"product gaps"| P5
+
 P1 -.->|"overview"| P6
 P2 -.->|"trends"| P6
 P3 -.->|"stack"| P6
@@ -175,12 +175,12 @@ P4 -.->|"health"| P6
 %% STYLING
 %% ════════════════════════════════════════════
 
-classDef blue fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e40af,text-align:left
-classDef orange fill:#fff7ed,stroke:#ea580c,stroke-width:2px,color:#9a3412,text-align:left
-classDef green fill:#ecfdf5,stroke:#059669,stroke-width:2px,color:#065f46,text-align:left
-classDef cyan fill:#ecfeff,stroke:#06b6d4,stroke-width:2px,color:#155e75,text-align:left
-classDef purple fill:#faf5ff,stroke:#7c3aed,stroke-width:2px,color:#5b21b6,text-align:left
-classDef rose fill:#fff1f2,stroke:#e11d48,stroke-width:2px,color:#9f1239,text-align:left
+classDef blue fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e40af
+classDef orange fill:#fff7ed,stroke:#ea580c,stroke-width:2px,color:#9a3412
+classDef green fill:#ecfdf5,stroke:#059669,stroke-width:2px,color:#065f46
+classDef cyan fill:#ecfeff,stroke:#06b6d4,stroke-width:2px,color:#155e75
+classDef purple fill:#faf5ff,stroke:#7c3aed,stroke-width:2px,color:#5b21b6
+classDef rose fill:#fff1f2,stroke:#e11d48,stroke-width:2px,color:#9f1239
 classDef revenue fill:#ecfdf5,stroke:#10b981,stroke-width:3px,color:#065f46
 
 classDef col1 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
