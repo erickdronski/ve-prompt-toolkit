@@ -1,0 +1,82 @@
+flowchart LR
+
+%% ════════════════════════════════════════════
+%% On Demand Sales Knowledge Toolkit
+%% 6-Prompt Chain for SEs, CSMs & VEs
+%% ════════════════════════════════════════════
+
+subgraph PUBLIC["🌐 Customer Landscape — Public Data"]
+  direction TB
+  P1["🔵 1. Market Research\nCompany, financials, leadership"]
+  P2["🟠 2. Vertical & Trends\nIndustry challenges, regulations"]
+  P3["🟢 3. Existing Ivanti Solutions\n⚠️ Manual Salesforce input"]
+end
+
+subgraph INTERNAL["🔒 Customer Ivanti Landscape — Internal Data"]
+  direction TB
+  P4["🔷 4. Tenant & Renewal Data\n⚠️ 360 + Salesforce input"]
+  RENEW["📊 Renewals & Opportunities\nFed from Salesforce"]
+end
+
+subgraph ACTION["⚡ Action Item Prompts"]
+  direction TB
+  P5["🟣 5. Cross-Sell / Up-Sell\nOpportunities + talk tracks"]
+  P6["🔴 6. Executive Readout\nPresentation-ready content"]
+  REVENUE(["💰 Revenue"])
+end
+
+%% ════════════════════════════════════════════
+%% CONNECTIONS
+%% ════════════════════════════════════════════
+
+%% Sequential chain
+P1 -->|"feeds into"| P2
+P2 -->|"industry context"| P3
+P3 -->|"footprint data"| P4
+P4 -->|"account intel"| P5
+P5 -->|"opportunities"| P6
+P6 -->|"drives"| REVENUE
+
+%% Internal data feeds
+P4 --> RENEW
+RENEW -.->|"renewal timing"| P5
+
+%% Cross-connections
+P1 -.->|"company context"| P5
+P2 -.->|"vertical challenges"| P5
+P3 -.->|"product gaps"| P5
+P1 -.->|"overview"| P6
+P2 -.->|"trends"| P6
+P3 -.->|"stack"| P6
+P4 -.->|"health"| P6
+
+%% Manual input indicators
+SF1[/"⚠️ Salesforce\nAccount Data"/] -.->|"manual pull"| P3
+SF2[/"⚠️ Customer 360\nTenant Data"/] -.->|"manual pull"| P4
+
+%% ════════════════════════════════════════════
+%% STYLING
+%% ════════════════════════════════════════════
+
+classDef public fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e40af
+classDef internal fill:#ecfeff,stroke:#06b6d4,stroke-width:2px,color:#155e75
+classDef action fill:#faf5ff,stroke:#7c3aed,stroke-width:2px,color:#5b21b6
+classDef revenue fill:#ecfdf5,stroke:#10b981,stroke-width:3px,color:#065f46
+classDef warning fill:#fffbeb,stroke:#f59e0b,stroke-width:2px,color:#92400e
+classDef renewal fill:#f0f9ff,stroke:#0284c7,stroke-width:1px,color:#075985
+
+classDef pubGroup fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e40af
+classDef intGroup fill:#ecfeff,stroke:#06b6d4,stroke-width:2px,color:#155e75
+classDef actGroup fill:#faf5ff,stroke:#7c3aed,stroke-width:2px,color:#5b21b6
+
+class P1,P2 public
+class P3 public
+class P4 internal
+class RENEW renewal
+class P5,P6 action
+class REVENUE revenue
+class SF1,SF2 warning
+
+class PUBLIC pubGroup
+class INTERNAL intGroup
+class ACTION actGroup
