@@ -1,47 +1,168 @@
-flowchart LR
+flowchart TB
 
 %% ════════════════════════════════════════════
 %% On Demand Sales Knowledge Toolkit
-%% 6-Prompt Chain for SEs, CSMs & VEs
+%% Full Prompt Content for Lucidchart Import
 %% ════════════════════════════════════════════
 
-subgraph PUBLIC["🌐 Customer Landscape — Public Data"]
+subgraph COL1["🌐 Customer Landscape — Public Data"]
   direction TB
-  P1["🔵 1. Market Research\nCompany, financials, leadership"]
-  P2["🟠 2. Vertical & Trends\nIndustry challenges, regulations"]
-  P3["🟢 3. Existing Ivanti Solutions\n⚠️ Manual Salesforce input"]
+
+  P1["🔵 1. MARKET RESEARCH
+  ─────────────────────
+  Act as a market research analyst.
+  Research CUSTOMER NAME and provide:
+
+  1 Company overview — what they do,
+    HQ, employees, revenue, status
+  2 Recent financial performance —
+    revenue trends, growth, earnings,
+    acquisitions or divestitures
+  3 Key leadership — CEO, CTO/CIO,
+    IT decision-makers
+  4 Competitive landscape — top 3
+    competitors and differentiation
+  5 Recent news — last 6 months of
+    press releases, partnerships,
+    layoffs, strategic shifts
+
+  Format as structured brief for
+  a customer meeting.
+
+  Pre-req: Customer company name"]
+
+  P2["🟠 2. VERTICAL & TRENDS
+  ─────────────────────
+  Based on CUSTOMER in INDUSTRY:
+
+  1 Top 5 IT and security challenges
+    facing this vertical in 2025-2026
+  2 Regulatory/compliance pressures
+    (HIPAA, SOX, PCI-DSS, GDPR)
+  3 Digital transformation trends —
+    cloud, AI/automation, endpoint
+    modernization, zero trust
+  4 Common IT maturity gaps based
+    on industry benchmarks
+  5 How orgs in this space structure
+    IT and security teams
+
+  Keep concise and actionable for
+  a pre-sales conversation.
+
+  Pre-req: Output from Prompt 1"]
+
+  P3["🟢 3. EXISTING IVANTI SOLUTIONS
+  ─────────────────────
+  ⚠️ MANUAL INPUT REQUIRED
+  Pull from Salesforce:
+  • Products Licensed
+  • License/Seat Count
+  • Renewal Date(s)
+  • Open Opportunities
+  • Adoption Status
+
+  Summarize Ivanti footprint:
+  1 Products active vs underutilized
+  2 Upcoming renewal risks or
+    expansion timing
+  3 Gaps in stack vs full portfolio
+
+  Format as quick-reference
+  account snapshot.
+
+  Pre-req: Salesforce account data"]
 end
 
-subgraph INTERNAL["🔒 Customer Ivanti Landscape — Internal Data"]
+subgraph COL2["🔒 Customer Ivanti Landscape — Internal Data"]
   direction TB
-  P4["🔷 4. Tenant & Renewal Data\n⚠️ 360 + Salesforce input"]
-  RENEW["📊 Renewals & Opportunities\nFed from Salesforce"]
+
+  P4["🔷 4. TENANT & RENEWAL DATA
+  ─────────────────────
+  ⚠️ MANUAL INPUT REQUIRED
+  Pull from Customer 360 + SFDC:
+  • Tenant data (modules, users, %)
+  • Renewals (date, ARR, risk)
+  • Open Opps (stage + value)
+  • CSM Health Score
+
+  Analyze this account:
+  1 Overall health — getting value?
+  2 Adoption gaps — licensed but
+    underused?
+  3 Revenue risk — churn signals
+    or renewal concerns?
+  4 Expansion readiness — what are
+    they ready for next?
+
+  Provide concise account
+  intelligence brief.
+
+  Pre-req: 360 + Salesforce data"]
 end
 
-subgraph ACTION["⚡ Action Item Prompts"]
+subgraph COL3["⚡ Action Item Prompts"]
   direction TB
-  P5["🟣 5. Cross-Sell / Up-Sell\nOpportunities + talk tracks"]
-  P6["🔴 6. Executive Readout\nPresentation-ready content"]
-  REVENUE(["💰 Revenue"])
+
+  P5["🟣 5. CROSS-SELL / UP-SELL
+  ─────────────────────
+  Using all prior outputs, identify
+  top 3-5 opportunities. For each:
+
+  1 Recommended solution + why
+    it fits their needs
+  2 Business problem it solves
+    tied to vertical challenges
+  3 Urgency level — tie to renewal
+    timing or pain severity
+  4 Talk track — 2-sentence pitch
+    an SE can use in conversation
+
+  Prioritize by revenue potential
+  and customer readiness.
+
+  Pre-req: Outputs from Prompts 1-4"]
+
+  P6["🔴 6. EXECUTIVE READOUT
+  ─────────────────────
+  Generate presentation-ready
+  slide content:
+
+  1 Customer Overview — who they
+    are, industry, scale
+  2 Our Path Together — timeline
+    of the Ivanti relationship
+  3 Strategic Objectives — top 3-5
+    goals from their challenges
+  4 Recommended Roadmap —
+    Crawl/Walk/Run phased approach
+  5 Value Hypothesis — business
+    benefits per solution
+  6 Next Steps
+
+  Keep language executive-level,
+  concise, benefit-focused.
+
+  Pre-req: Outputs from Prompts 1-5"]
+
+  REVENUE(["💰 REVENUE
+  Cross-sell pipeline
+  Renewal protection
+  Executive buy-in"])
 end
 
 %% ════════════════════════════════════════════
-%% CONNECTIONS
+%% FLOW CONNECTIONS
 %% ════════════════════════════════════════════
 
-%% Sequential chain
 P1 -->|"feeds into"| P2
 P2 -->|"industry context"| P3
-P3 -->|"footprint data"| P4
+P3 -->|"footprint"| P4
 P4 -->|"account intel"| P5
 P5 -->|"opportunities"| P6
 P6 -->|"drives"| REVENUE
 
-%% Internal data feeds
-P4 --> RENEW
-RENEW -.->|"renewal timing"| P5
-
-%% Cross-connections
+%% Cross-feeds
 P1 -.->|"company context"| P5
 P2 -.->|"vertical challenges"| P5
 P3 -.->|"product gaps"| P5
@@ -50,33 +171,30 @@ P2 -.->|"trends"| P6
 P3 -.->|"stack"| P6
 P4 -.->|"health"| P6
 
-%% Manual input indicators
-SF1[/"⚠️ Salesforce\nAccount Data"/] -.->|"manual pull"| P3
-SF2[/"⚠️ Customer 360\nTenant Data"/] -.->|"manual pull"| P4
-
 %% ════════════════════════════════════════════
 %% STYLING
 %% ════════════════════════════════════════════
 
-classDef public fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e40af
-classDef internal fill:#ecfeff,stroke:#06b6d4,stroke-width:2px,color:#155e75
-classDef action fill:#faf5ff,stroke:#7c3aed,stroke-width:2px,color:#5b21b6
+classDef blue fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e40af,text-align:left
+classDef orange fill:#fff7ed,stroke:#ea580c,stroke-width:2px,color:#9a3412,text-align:left
+classDef green fill:#ecfdf5,stroke:#059669,stroke-width:2px,color:#065f46,text-align:left
+classDef cyan fill:#ecfeff,stroke:#06b6d4,stroke-width:2px,color:#155e75,text-align:left
+classDef purple fill:#faf5ff,stroke:#7c3aed,stroke-width:2px,color:#5b21b6,text-align:left
+classDef rose fill:#fff1f2,stroke:#e11d48,stroke-width:2px,color:#9f1239,text-align:left
 classDef revenue fill:#ecfdf5,stroke:#10b981,stroke-width:3px,color:#065f46
-classDef warning fill:#fffbeb,stroke:#f59e0b,stroke-width:2px,color:#92400e
-classDef renewal fill:#f0f9ff,stroke:#0284c7,stroke-width:1px,color:#075985
 
-classDef pubGroup fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e40af
-classDef intGroup fill:#ecfeff,stroke:#06b6d4,stroke-width:2px,color:#155e75
-classDef actGroup fill:#faf5ff,stroke:#7c3aed,stroke-width:2px,color:#5b21b6
+classDef col1 fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
+classDef col2 fill:#ecfeff,stroke:#06b6d4,stroke-width:2px
+classDef col3 fill:#faf5ff,stroke:#7c3aed,stroke-width:2px
 
-class P1,P2 public
-class P3 public
-class P4 internal
-class RENEW renewal
-class P5,P6 action
+class P1 blue
+class P2 orange
+class P3 green
+class P4 cyan
+class P5 purple
+class P6 rose
 class REVENUE revenue
-class SF1,SF2 warning
 
-class PUBLIC pubGroup
-class INTERNAL intGroup
-class ACTION actGroup
+class COL1 col1
+class COL2 col2
+class COL3 col3
